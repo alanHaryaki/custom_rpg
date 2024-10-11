@@ -46,3 +46,13 @@ func _gui_input(event: InputEvent) -> void:
 							get_child(0).queue_free()
 				else:
 					player.item_equipped = get_child(0).data
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.button_mask == MOUSE_BUTTON_MASK_RIGHT:
+			if get_child_count() > 0:
+				if get_child(0).data.item_name != player.item_equipped.item_name:
+					var item_index: int = Game.get_item_index(get_child(0).data)
+					if get_child(0).data.stackable:
+						for i in range(get_child(0).data.count):
+							player.drop_item(item_index)
+					else:
+						player.drop_item(item_index)
+					get_child(0).queue_free()

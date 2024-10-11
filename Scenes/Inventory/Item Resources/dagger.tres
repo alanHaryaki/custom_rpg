@@ -12,6 +12,7 @@ item_health = 0
 item_defense = 0
 item_effects = Array[int]([2])
 stackable = false
+attack_rate_multiplier = 1.2
 count = 0
 description = "This is a dagger!"
 item_texture = ExtResource("1_k0mil")

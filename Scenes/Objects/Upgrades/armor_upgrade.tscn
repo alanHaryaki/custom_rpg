@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://2bcoikdabjt4"]
+
+[ext_resource type="PackedScene" uid="uid://biqnaebavh32k" path="res://Scenes/Objects/upgrade_object.tscn" id="1_ubqx4"]
+[ext_resource type="Script" path="res://Scripts/Objects/Upgrades/armor_upgrade.gd" id="2_wtq6h"]
+
+[node name="ArmorUpgrade" instance=ExtResource("1_ubqx4")]
+script = ExtResource("2_wtq6h")

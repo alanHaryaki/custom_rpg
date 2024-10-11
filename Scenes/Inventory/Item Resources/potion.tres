@@ -12,6 +12,7 @@ item_health = 5
 item_defense = 0
 item_effects = Array[int]([])
 stackable = true
+attack_rate_multiplier = 0.0
 count = 1
 description = "Drink this when you feel dying!"
 item_texture = ExtResource("1_v3pqg")

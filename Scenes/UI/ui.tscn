@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4ydi20x11w0"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ui.gd" id="1_fl8b1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig22h"]
+bg_color = Color(0.1, 0.1, 0.1, 0.196078)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 13.0
+expand_margin_top = 3.0
+expand_margin_right = 13.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccwfy"]
+bg_color = Color(0.1, 0.1, 0.1, 0.392157)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 15.0
+expand_margin_top = 5.0
+expand_margin_right = 15.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="Theme" id="Theme_l7lqv"]
+default_font_size = 30
+Button/font_sizes/font_size = 30
+Button/styles/hover = SubResource("StyleBoxFlat_ig22h")
+Button/styles/normal = SubResource("StyleBoxFlat_ccwfy")
+Button/styles/pressed = SubResource("StyleBoxFlat_ig22h")
+Label/font_sizes/font_size = 50
+
+[node name="UI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_fl8b1")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+theme = SubResource("Theme_l7lqv")
+metadata/_edit_use_anchors_ = true

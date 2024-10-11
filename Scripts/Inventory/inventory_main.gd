@@ -2,21 +2,20 @@ extends Control
 
 @export var inventory_size: int = 9
 @onready var grid: GridContainer = $Grid
+@onready var player: CharacterBody2D = get_tree().root.get_node("World/Player")
 
 func _ready() -> void:
 	for i: int in inventory_size:
 		var slot := InventorySlot.new()
 		slot.init(ItemData.Type.MAIN, Vector2(32, 32))
 		grid.add_child(slot)
-	for i: int in Game.items.size():
-		#var item = InventoryItem.new()
-		#item.init(load(items_to_load[i]))
-		#grid.get_child(i).add_child(item)
-		add_item(i)
+	add_item(Game.get_item_index(player.item_equipped))
+	#for i: int in Game.items.size():
+		#add_item(i)
 
-func add_item(item_num: int) -> void:
+func add_item(item_index: int) -> void:
 	var item = InventoryItem.new()
-	item.init(Game.items[item_num])
+	item.init(Game.items[item_index])
 	if item.data.stackable:
 		for i: int in inventory_size:
 			if grid.get_child(i).get_child_count() > 0:

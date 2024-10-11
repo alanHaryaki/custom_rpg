@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://fuoueblo4uc4"]
+[gd_scene load_steps=12 format=3 uid="uid://fuoueblo4uc4"]
 
 [ext_resource type="Script" path="res://Scripts/Characters/character.gd" id="1_7ti38"]
 [ext_resource type="Texture2D" uid="uid://d0woc8imx4ekw" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0109.png" id="2_1rhfj"]
-[ext_resource type="PackedScene" uid="uid://ds64a1f8gfted" path="res://Scenes/health_bar.tscn" id="3_4n2p6"]
+[ext_resource type="PackedScene" uid="uid://ds64a1f8gfted" path="res://Scenes/UI/health_bar.tscn" id="3_4n2p6"]
 [ext_resource type="Texture2D" uid="uid://dwgiknhalj5pm" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0104.png" id="4_dt7cm"]
 [ext_resource type="Texture2D" uid="uid://cymvme8dqaqcl" path="res://Assets/kenney_tiny-town/Tiles/tile_0118.png" id="5_kn358"]
+[ext_resource type="AudioStream" uid="uid://dh8niqdsyrx8y" path="res://Assets/arrow shoot.ogg" id="6_gjucb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x7i5l"]
 radius = 5.0
@@ -84,7 +85,6 @@ texture = ExtResource("2_1rhfj")
 shape = SubResource("CapsuleShape2D_x7i5l")
 
 [node name="WeaponHolder" type="Marker2D" parent="."]
-visible = false
 
 [node name="Melee" type="Area2D" parent="WeaponHolder"]
 position = Vector2(11, 0)
@@ -104,7 +104,8 @@ position = Vector2(13, 0)
 [node name="Sprite2D" type="Sprite2D" parent="WeaponHolder/Ranged"]
 texture = ExtResource("5_kn358")
 
-[node name="Timer" type="Timer" parent="WeaponHolder/Ranged"]
+[node name="Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_gjucb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

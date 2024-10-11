@@ -5,5 +5,3 @@
 
 [node name="Monster" groups=["monster"] instance=ExtResource("1_kqyy8")]
 script = ExtResource("2_lhug7")
-default_speed = 80
-max_health = 20
