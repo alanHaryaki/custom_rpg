@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://i18r845ujghg"]
+
+[ext_resource type="Texture2D" uid="uid://cymvme8dqaqcl" path="res://Assets/kenney_tiny-town/Tiles/tile_0118.png" id="1_a2l0e"]
+[ext_resource type="Script" path="res://Scripts/Inventory/item_data.gd" id="2_us52m"]
+
+[resource]
+script = ExtResource("2_us52m")
+type = 1
+item_name = "bow"
+item_damage = 1
+item_health = 0
+item_defense = 0
+stackable = false
+count = 0
+description = "This is a short bow!"
+item_texture = ExtResource("1_a2l0e")
