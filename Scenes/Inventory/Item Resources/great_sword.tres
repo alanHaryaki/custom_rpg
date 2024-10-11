@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://4mt48sp2xjul"]
+
+[ext_resource type="Texture2D" uid="uid://bpgkbrnq7ca2u" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0106.png" id="1_fn5hn"]
+[ext_resource type="Script" path="res://Scripts/Inventory/item_data.gd" id="2_lpdhs"]
+
+[resource]
+script = ExtResource("2_lpdhs")
+type = 0
+item_name = "great sword"
+item_damage = 10
+item_health = 0
+item_defense = 0
+item_effects = Array[int]([1])
+stackable = false
+count = 0
+description = "This is a BIG sword!"
+item_texture = ExtResource("1_fn5hn")

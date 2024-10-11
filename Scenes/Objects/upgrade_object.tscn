@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://biqnaebavh32k"]
+
+[ext_resource type="PackedScene" uid="uid://biudfac5vf1ca" path="res://Scenes/Objects/pickable_object.tscn" id="1_jdkul"]
+[ext_resource type="Script" path="res://Scripts/Objects/upgrade_object.gd" id="2_lh4sl"]
+[ext_resource type="Texture2D" uid="uid://c3iot87pcdssn" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0102.png" id="2_nt8hm"]
+
+[node name="UpgradeObject" instance=ExtResource("1_jdkul")]
+script = ExtResource("2_lh4sl")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_nt8hm")

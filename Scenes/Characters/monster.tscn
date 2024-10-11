@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d17oycp4shaei"]
+
+[ext_resource type="PackedScene" uid="uid://fuoueblo4uc4" path="res://Scenes/Characters/character.tscn" id="1_kqyy8"]
+[ext_resource type="Script" path="res://Scripts/Characters/monster.gd" id="2_lhug7"]
+
+[node name="Monster" groups=["monster"] instance=ExtResource("1_kqyy8")]
+script = ExtResource("2_lhug7")
+default_speed = 80
+max_health = 20

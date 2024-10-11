@@ -1,40 +1,22 @@
-extends CharacterBody2D
+extends Character
 
-var arrow_scene: PackedScene = preload("res://Scenes/Projectiles/arrow.tscn")
-@onready var weapon_marker: Marker2D = $WeaponHolder
-@onready var melee_weapon: Area2D = $WeaponHolder/Melee
-@onready var ranged_weapon: Marker2D = $WeaponHolder/Ranged
-@onready var health_bar: ProgressBar = $HealthBar
+var default_texture: Texture2D = preload("res://Assets/kenney_tiny-dungeon/Tiles/tile_0085.png")
+var armor1: Texture2D = preload("res://Assets/kenney_tiny-dungeon/Tiles/tile_0098.png")
+var armor2: Texture2D = preload("res://Assets/kenney_tiny-dungeon/Tiles/tile_0097.png")
+var armor3: Texture2D = preload("res://Assets/kenney_tiny-dungeon/Tiles/tile_0096.png")
 
-@export var speed: int = 80
-
-var dying: bool = false
 var attacking_melee: bool = false
 var attacking_ranged: bool = false
-var max_health: int = 20
-var health: int: set = set_health
-var damage: int = 2
+var armor: int: set = set_armor
 
 var attacked_bodies: Array[CharacterBody2D]
 
-func _ready() -> void:
-	health = max_health
-
 func _physics_process(delta: float) -> void:
+	focus = get_global_mouse_position()
 	
-	manage_weapon()
+	super(delta)
 	
 	if not dying:
-		
-		weapon_marker.look_at(get_global_mouse_position())
-	
-	
-		if cos(weapon_marker.rotation) > 0:
-			$WeaponHolder/Melee/Sprite2D.flip_h = true
-			$Sprite2D.flip_h = false
-		else:
-			$WeaponHolder/Melee/Sprite2D.flip_h = false
-			$Sprite2D.flip_h = true
 		
 		attack_check(delta)
 		
@@ -47,7 +29,6 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func _on_melee_body_entered(body: Node2D) -> void:
-	# Check for damaging monster
 	if attacking_melee and body.is_in_group("monster"):
 		if body not in attacked_bodies:
 			attacked_bodies.append(body)
@@ -55,6 +36,18 @@ func _on_melee_body_entered(body: Node2D) -> void:
 			body.take_damage(Game.item_equipped.item_damage)
 		else:
 			body.take_damage(damage)'''
+	
+	
+func _on_melee_area_entered(area: Area2D) -> void:
+	if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects:
+		if attacking_melee and area.is_in_group("projectile") and area.owner_name == "monster":
+			area.queue_free()
+	elif ItemData.Effect.ARROW_DEFLECT in item_equipped.item_effects:
+		if attacking_melee and area.is_in_group("projectile") and area.owner_name == "monster":
+			area.owner_name = "player"
+			area.can_counteract = false
+			area.rotate(PI)
+			area.direction = - area.direction
 
 func attack_check(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") and not attacking_melee:
@@ -72,12 +65,23 @@ func melee_attack(_target_position: Vector2):
 		if body.is_in_group("monster"):
 			attacked_bodies.append(body)
 			#body.take_damage(Game.item_equipped.item_damage)
+	for area: Area2D in melee_weapon.get_overlapping_areas():
+		if area.is_in_group("projectile") and area.owner_name == "monster":
+			if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects:
+				area.queue_free()
+			elif ItemData.Effect.ARROW_DEFLECT in item_equipped.item_effects:
+				area.owner_name = "player"
+				area.rotate(PI)
+				area.direction = - area.direction
 	var tween: Tween = create_tween()
 	tween.tween_property(weapon_marker, "position", _target_position * 10, 0.2)
 	tween.tween_callback(return_default)
 	await tween.finished
 	for body in attacked_bodies:
-		body.take_damage(Game.item_equipped.item_damage)
+		if body != null:
+			body.take_damage(item_equipped.item_damage)
+			if ItemData.Effect.BLEED in item_equipped.item_effects:
+				body.bleed()
 
 func return_default() -> void:
 	var tween: Tween = create_tween()
@@ -96,35 +100,55 @@ func ranged_attack(_target_position) -> void:
 	arrow_temp.direction = _target_position
 	arrow_temp.owner_name = "player"
 	arrow_temp.look_at(_target_position)
-	arrow_temp.damage = Game.item_equipped.item_damage
+	#arrow_temp.damage = Game.item_equipped.item_damage
 	arrow_temp.global_position = global_position
 	$"../Projectiles".add_child(arrow_temp)
 
 func take_damage(_damage: int) -> void:
 	$Hit.play()
 	
-	health -= _damage
+	super(_damage)
 
 func set_health(_health) -> void:
-	health = _health
-	health = min(health, max_health)
-	health_bar.update_value()
+	super(_health)
 	
 	if health <= 0:
 		dying = true
 		$"../GameOver".game_over()
 
-func manage_weapon() -> void:
-	if Game.item_equipped:
-		match Game.item_equipped.type:
-			ItemData.Type.MELEE:
-				melee_weapon.show()
-				ranged_weapon.hide()
-				melee_weapon.get_node("Sprite2D").texture = Game.item_equipped.item_texture
-			ItemData.Type.RANGED:
-				melee_weapon.hide()
-				ranged_weapon.show()
-				ranged_weapon.get_node("Sprite2D").texture = Game.item_equipped.item_texture
-			_:
-				melee_weapon.hide()
-				ranged_weapon.hide()
+func set_armor(_armor: int) -> void:
+	armor = min(3, _armor)
+	
+	match armor:
+		0:
+			'''$Sprite2D.show()
+			$Armor1.hide()
+			$Armor2.hide()
+			$Armor3.hide()'''
+			sprite.texture = default_texture
+			defense = 0
+			speed = default_speed
+		1:
+			'''$Sprite2D.hide()
+			$Armor1.show()
+			$Armor2.hide()
+			$Armor3.hide()'''
+			sprite.texture = armor1
+			defense = 1 
+			speed = default_speed - 5
+		2:
+			'''$Sprite2D.hide()
+			$Armor1.hide()
+			$Armor2.show()
+			$Armor3.hide()'''
+			sprite.texture = armor2
+			defense = 2
+			speed = default_speed - 10
+		3:
+			'''$Sprite2D.hide()
+			$Armor1.hide()
+			$Armor2.hide()
+			$Armor3.show()'''
+			sprite.texture = armor3
+			defense = 3
+			speed = default_speed - 15

@@ -23,10 +23,19 @@ Game="*res://Scripts/Global/game.gd"
 
 window/stretch/mode="canvas_items"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "green",
+"res://Scenes/": "purple",
+"res://Scripts/": "gray"
+}
+
 [global_group]
 
 monster=""
 player=""
+projectile=""
 
 [input]
 

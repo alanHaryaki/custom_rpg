@@ -2,6 +2,7 @@ extends PanelContainer
 
 class_name InventorySlot
 
+@onready var player = get_tree().get_nodes_in_group("player")[0]
 @export var type: ItemData.Type
 var equipped: bool = false
 
@@ -37,7 +38,6 @@ func _gui_input(event: InputEvent) -> void:
 			if get_child_count() > 0:
 				# Check for misc item, otherwise equip item in slot
 				if get_child(0).data.type == ItemData.Type.MISC:
-					var player = get_tree().get_nodes_in_group("player")[0]
 					if player.health < player.max_health:
 						player.health += get_child(0).data.item_health
 						get_child(0).data.count -= 1
@@ -45,4 +45,4 @@ func _gui_input(event: InputEvent) -> void:
 						if get_child(0).data.count <= 0:
 							get_child(0).queue_free()
 				else:
-					Game.item_equipped = get_child(0).data
+					player.item_equipped = get_child(0).data

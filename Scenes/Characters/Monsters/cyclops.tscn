@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://beo8jg6c6jtj1"]
+
+[ext_resource type="PackedScene" uid="uid://d17oycp4shaei" path="res://Scenes/Characters/monster.tscn" id="1_shhlp"]
+[ext_resource type="Script" path="res://Scripts/Characters/Monsters/cyclops.gd" id="1_w0j0s"]
+
+[node name="Cyclops" instance=ExtResource("1_shhlp")]
+script = ExtResource("1_w0j0s")
