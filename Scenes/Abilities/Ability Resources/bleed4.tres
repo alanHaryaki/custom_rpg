@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://bld6ytb6d46jm"]
+
+[ext_resource type="Texture2D" uid="uid://b268y1328s13r" path="res://Assets/Ability/ability_bleed4.png" id="1_8q7um"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_data.gd" id="2_1o0kk"]
+
+[resource]
+script = ExtResource("2_1o0kk")
+ability_name = 4
+conditions = Array[int]([3])
+description = "Each melee attack has 100% chance making enemy bleed."
+ability_texture = ExtResource("1_8q7um")

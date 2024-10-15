@@ -2,7 +2,8 @@ extends Control
 
 @export var inventory_size: int = 9
 @onready var grid: GridContainer = $Grid
-@onready var player: CharacterBody2D = get_tree().root.get_node("World/Player")
+@onready var world: Node2D = get_tree().root.get_node("World")
+@onready var player: CharacterBody2D = get_tree().root.get_node("World/SpawnManager/Player")
 
 func _ready() -> void:
 	for i: int in inventory_size:

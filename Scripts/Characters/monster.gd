@@ -5,7 +5,7 @@ class_name Monster
 var gold_scene: PackedScene = preload("res://Scenes/Objects/Upgrades/gold.tscn")
 var armor_upgrade_scene: PackedScene = preload("res://Scenes/Objects/Upgrades/armor_upgrade.tscn")
 
-@onready var player: CharacterBody2D = $"../../../Player"
+@onready var player: CharacterBody2D = world.get_node("SpawnManager/Player")
 
 var direction: Vector2 = Vector2.ZERO
 
@@ -32,7 +32,7 @@ func set_health(_health) -> void:
 		dying = true
 		get_node("AnimationPlayer").play("death")
 		await get_node("AnimationPlayer").animation_finished
-		var _randi: int = randi_range(2, 5)
+		var _randi: int = randi_range(1, 3)
 		for i: int in range(_randi):
 			var gold_temp: Area2D = gold_scene.instantiate()
 			gold_temp.global_position = global_position
@@ -45,7 +45,7 @@ func set_health(_health) -> void:
 			var armor_upgrade_temp: Area2D = armor_upgrade_scene.instantiate()
 			armor_upgrade_temp.global_position = global_position
 			world.objects.add_child(armor_upgrade_temp)
-		if _randi == 5:
+		if _randi == 1:
 			var potion_temp: Area2D = item_scene.instantiate()
 			potion_temp.item_override(0)
 			potion_temp.global_position = global_position

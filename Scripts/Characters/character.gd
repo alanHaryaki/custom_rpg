@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 class_name Character
 
-var arrow_scene: PackedScene = preload("res://Scenes/Projectiles/arrow.tscn")
 var item_scene: PackedScene = preload("res://Scenes/Objects/item_object.tscn")
 
 @onready var world: Node2D = get_tree().root.get_node("World")
@@ -23,10 +22,12 @@ var defense: int
 var damage: int = 2
 var dying: bool = false
 var attack_rate: float = 1.0
+var abilities: Array[AbilityData.AbilityName]
 
 var attacking_melee: bool = false
 var attacked_bodies: Array[CharacterBody2D]
 var attacking_ranged: bool = false
+var is_blocking: bool = false
 
 var friendly_group_name: String
 var hostile_group_name: String
@@ -99,6 +100,7 @@ func manage_weapon() -> void:
 				melee_weapon.show()
 				ranged_weapon.hide()
 				melee_weapon.get_node("Sprite2D").texture = item_equipped.item_texture
+				melee_weapon.get_node("CollisionShape2D").shape = item_equipped.item_collision_shape
 			ItemData.Type.RANGED:
 				melee_weapon.hide()
 				ranged_weapon.show()
@@ -113,15 +115,20 @@ func _on_melee_body_entered(body: Node2D) -> void:
 			attacked_bodies.append(body)
 
 func _on_melee_area_entered(area: Area2D) -> void:
-	if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects:
+	'''if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects or is_blocking:
 		if attacking_melee and area.is_in_group("projectile") and area.owner_name == hostile_group_name:
 			area.queue_free()
 	elif ItemData.Effect.ARROW_DEFLECT in item_equipped.item_effects:
 		if attacking_melee and area.is_in_group("projectile") and area.owner_name == hostile_group_name:
 			area.owner_name = friendly_group_name
-			area.can_counteract = false
 			area.rotate(PI)
-			area.direction = - area.direction
+			area.direction = - area.direction'''
+	if AbilityData.AbilityName.DEFLECT in abilities:
+		area.owner_name = friendly_group_name
+		area.rotate(PI)
+		area.direction = - area.direction
+	elif AbilityData.AbilityName.SLICE in abilities or is_blocking:
+		area.queue_free()
 
 func melee_attack(_target_position: Vector2):
 	attacking_melee = true
@@ -133,12 +140,15 @@ func melee_attack(_target_position: Vector2):
 			#body.take_damage(Game.item_equipped.item_damage)
 	for area: Area2D in melee_weapon.get_overlapping_areas():
 		if area.is_in_group("projectile") and area.owner_name == hostile_group_name:
-			if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects:
-				area.queue_free()
-			elif ItemData.Effect.ARROW_DEFLECT in item_equipped.item_effects:
+			#if ItemData.Effect.ARROW_SLICE in item_equipped.item_effects:
+			#if ItemData.Effect.ARROW_DEFLECT in item_equipped.item_effects:
+			if AbilityData.AbilityName.DEFLECT in abilities:
 				area.owner_name = friendly_group_name
 				area.rotate(PI)
 				area.direction = - area.direction
+			elif AbilityData.AbilityName.SLICE in abilities:
+				area.queue_free()
+			
 	var tween: Tween = create_tween()
 	tween.tween_property(weapon_marker, "position", _target_position * 10, 0.2)
 	tween.tween_callback(return_default)
@@ -146,8 +156,24 @@ func melee_attack(_target_position: Vector2):
 	for body in attacked_bodies:
 		if body != null:
 			body.take_damage(item_equipped.item_damage)
-			if ItemData.Effect.BLEED in item_equipped.item_effects:
-				body.bleed()
+			#if ItemData.Effect.BLEED in item_equipped.item_effects:
+			if AbilityData.AbilityName.BLEED in abilities:
+				if AbilityData.AbilityName.BLEED4 in abilities:
+					body.bleed()
+				else:
+					var randi: int = randi_range(1, 5)
+					if AbilityData.AbilityName.BLEED3 in abilities:
+						if randi <= 4:
+							body.bleed()
+					elif AbilityData.AbilityName.BLEED2 in abilities:
+						if randi <= 3:
+							body.bleed()
+					elif AbilityData.AbilityName.BLEED1 in abilities:
+						if randi <= 2:
+							body.bleed()
+					else:
+						if randi == 1:
+							body.bleed()
 
 func return_default() -> void:
 	var tween: Tween = create_tween()
@@ -156,11 +182,30 @@ func return_default() -> void:
 func ranged_attack(_target_position) -> void:
 	$Shoot.play()
 	attacking_ranged = true
+	var _counteract: int
+	if AbilityData.AbilityName.COUNTERACT2 in abilities:
+		_counteract = 2
+	elif AbilityData.AbilityName.COUNTERACT in abilities:
+		_counteract = 1
+	else:
+		_counteract = 0
+	var _bleed: int
+	if AbilityData.AbilityName.BLEED5 in abilities:
+		_bleed = 1
+	else:
+		_bleed = 0
+	ranged_weapon.shoot(_target_position, _counteract, _bleed)
 	$AttackCooldown.start(1 /(attack_rate * item_equipped.attack_rate_multiplier))
-	var arrow_temp: Area2D = arrow_scene.instantiate()
-	arrow_temp.direction = _target_position
-	arrow_temp.owner_name = friendly_group_name
-	arrow_temp.look_at(_target_position)
-	#arrow_temp.damage = Game.item_equipped.item_damage
-	arrow_temp.global_position = global_position
-	world.projectiles.add_child(arrow_temp)
+
+func block() -> void:
+	is_blocking = true
+	for area: Area2D in melee_weapon.get_overlapping_areas():
+		if area.is_in_group("projectile") and area.owner_name == hostile_group_name:
+			area.queue_free()
+	var tween: Tween = create_tween()
+	var current_rotation = weapon_marker.rotation
+	tween.tween_property(weapon_marker, "rotation", current_rotation + PI/3, 0.2)
+	tween.tween_property(weapon_marker, "rotation", current_rotation - 2 * PI/3, 0.2)
+	tween.tween_property(weapon_marker, "rotation", current_rotation + PI/3, 0.2)
+	await tween.finished
+	is_blocking = false

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://b5kv0umgstpt1"]
+
+[ext_resource type="Texture2D" uid="uid://dap42omfgtu1p" path="res://Assets/Ability/ability_counteract.png" id="1_rfu0e"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_data.gd" id="2_jsd1c"]
+
+[resource]
+script = ExtResource("2_jsd1c")
+ability_name = 7
+conditions = Array[int]([])
+description = "Arrows can destory enemy arrows, but will also destory themselves."
+ability_texture = ExtResource("1_rfu0e")

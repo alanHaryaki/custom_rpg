@@ -15,3 +15,4 @@ enum Effect {ARROW_SLICE, ARROW_DEFLECT, BLEED}
 @export var count: int
 @export_multiline var description: String
 @export var item_texture: Texture2D
+@export var item_collision_shape: RectangleShape2D

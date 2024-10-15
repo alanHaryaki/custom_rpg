@@ -30,12 +30,17 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func attack_check(delta: float) -> void:
-	if Input.is_action_just_pressed("attack") and not attacking_melee:
+	if Input.is_action_just_pressed("attack"):
 		var target_position: Vector2 = (get_global_mouse_position() - weapon_marker.global_position).normalized()
 		if not attacking_melee and melee_weapon.visible:
 			melee_attack(target_position)
 		if not attacking_ranged and ranged_weapon.visible:
 			ranged_attack(target_position)
+	if Input.is_action_just_pressed("block"):
+		if AbilityData.AbilityName.BLOCK in abilities:
+			if not attacking_melee and not is_blocking:
+				if melee_weapon.visible:
+					block()
 
 func melee_attack(_target_position: Vector2):
 	$Sword.play()

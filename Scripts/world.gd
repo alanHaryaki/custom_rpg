@@ -1,8 +1,10 @@
 extends Node2D
 
+@onready var player: CharacterBody2D = $SpawnManager/Player
 @onready var projectiles: Node2D = $Projectiles
-@onready var objects: Node = $Objects
+@onready var objects: Node2D = $Objects
 @onready var inventory: Control = $GUI/Inventory
+@onready var ability_selection_screen: CanvasLayer = $AbilitySelection
 
 func game_over() -> void:
 	$GameOver.display()

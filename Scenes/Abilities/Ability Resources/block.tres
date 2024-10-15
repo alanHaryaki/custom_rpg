@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://c36jdq1oehl6u"]
+
+[ext_resource type="Texture2D" uid="uid://bmkx3rq7cjpu2" path="res://Assets/Ability/ability_block.png" id="1_llh6c"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_data.gd" id="2_fiid4"]
+
+[resource]
+script = ExtResource("2_fiid4")
+ability_name = 6
+conditions = Array[int]([])
+description = "Again the ability to block range attack. (right click)"
+ability_texture = ExtResource("1_llh6c")

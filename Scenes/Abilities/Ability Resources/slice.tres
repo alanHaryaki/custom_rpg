@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://b7gswoex2xr88"]
+
+[ext_resource type="Texture2D" uid="uid://i17d4xat3rqm" path="res://Assets/Ability/ability_slice.png" id="1_f11sf"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_data.gd" id="2_8e22e"]
+
+[resource]
+script = ExtResource("2_8e22e")
+ability_name = 10
+conditions = Array[int]([])
+description = "Melee attack can destory enemy arrows."
+ability_texture = ExtResource("1_f11sf")

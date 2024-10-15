@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=3 format=3 uid="uid://c611rg2gdo4rg"]
+
+[ext_resource type="Texture2D" uid="uid://qc1pptwohpsl" path="res://Assets/Ability/ability_bleed5.png" id="1_hxgxa"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_data.gd" id="2_hj01h"]
+
+[resource]
+script = ExtResource("2_hj01h")
+ability_name = 5
+conditions = Array[int]([4])
+description = "Melee attack and ranged attack will make enemy bleed."
+ability_texture = ExtResource("1_hxgxa")

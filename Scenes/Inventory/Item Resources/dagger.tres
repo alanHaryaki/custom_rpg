@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://jypk5i1i6h8c"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://jypk5i1i6h8c"]
 
 [ext_resource type="Texture2D" uid="uid://bpw2wisiyakvc" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0103.png" id="1_k0mil"]
 [ext_resource type="Script" path="res://Scripts/Inventory/item_data.gd" id="2_48w36"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqen5"]
+size = Vector2(13, 6)
 
 [resource]
 script = ExtResource("2_48w36")
@@ -16,3 +19,4 @@ attack_rate_multiplier = 1.2
 count = 0
 description = "This is a dagger!"
 item_texture = ExtResource("1_k0mil")
+item_collision_shape = SubResource("RectangleShape2D_kqen5")

@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://hc35k7ftyotc"]
+
+[ext_resource type="Texture2D" uid="uid://bmkx3rq7cjpu2" path="res://Assets/Ability/ability_block.png" id="1_afdmo"]
+[ext_resource type="Script" path="res://Scripts/Abilities/ability_card.gd" id="1_bpsu4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0sf35"]
+font_size = 35
+
+[sub_resource type="LabelSettings" id="LabelSettings_vjffn"]
+
+[node name="AbilityCard" type="MarginContainer"]
+process_mode = 3
+custom_minimum_size = Vector2(224, 352)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_bpsu4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(224, 224)
+layout_mode = 2
+texture = ExtResource("1_afdmo")
+
+[node name="Name" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "BLOCK"
+label_settings = SubResource("LabelSettings_0sf35")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Can block arrows (right click)
+
+"
+label_settings = SubResource("LabelSettings_vjffn")
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

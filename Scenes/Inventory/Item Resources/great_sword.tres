@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://4mt48sp2xjul"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://4mt48sp2xjul"]
 
-[ext_resource type="Texture2D" uid="uid://bpgkbrnq7ca2u" path="res://Assets/kenney_tiny-dungeon/Tiles/tile_0106.png" id="1_fn5hn"]
+[ext_resource type="Texture2D" uid="uid://c864ao0vwl2md" path="res://Assets/Weapons/great_sword.png" id="1_usd7o"]
 [ext_resource type="Script" path="res://Scripts/Inventory/item_data.gd" id="2_lpdhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sv5a4"]
+size = Vector2(20, 8)
 
 [resource]
 script = ExtResource("2_lpdhs")
@@ -15,4 +18,5 @@ stackable = false
 attack_rate_multiplier = 0.7
 count = 0
 description = "This is a BIG sword!"
-item_texture = ExtResource("1_fn5hn")
+item_texture = ExtResource("1_usd7o")
+item_collision_shape = SubResource("RectangleShape2D_sv5a4")

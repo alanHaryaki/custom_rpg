@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfut6ipn4886a"]
 
 [ext_resource type="PackedScene" uid="uid://dthoqqj85gaq1" path="res://Scenes/Inventory/inventory_main.tscn" id="1_vq8y7"]
-[ext_resource type="Script" path="res://Scripts/UI/gold_display.gd" id="2_8fjj4"]
+[ext_resource type="Script" path="res://Scripts/UI/gold_counter.gd" id="2_8fjj4"]
 [ext_resource type="Texture2D" uid="uid://cvmf64mnvg451" path="res://Assets/kenney_tiny-town/Tiles/tile_0093.png" id="2_gkq5k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyn4e"]
